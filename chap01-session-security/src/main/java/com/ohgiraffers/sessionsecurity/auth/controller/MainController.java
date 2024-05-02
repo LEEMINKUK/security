@@ -12,8 +12,6 @@ public class MainController {
         return "main";
     }
 
-
-
     //아래는 따로 분리해서 사용하는게 맞다.
 
 
