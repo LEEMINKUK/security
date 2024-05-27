@@ -59,8 +59,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     // 유저 정보
                     DetailsUser authentication = new DetailsUser();
                     LoginUserDTO user = new LoginUserDTO();
-                    user.setUserName(claims.get("UserName").toString());
-                    user.setUserRole(UserRole.valueOf(claims.get("UserRole").toString()));
+                    user.setUserName(claims.get("userName").toString());
+                    user.setUserRole(UserRole.valueOf(claims.get("userRole").toString()));
                     authentication.setUser(user);
 
                     AbstractAuthenticationToken authenticationToken

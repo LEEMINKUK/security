@@ -81,12 +81,12 @@ public class TokenUtils {
         return builder.compact();
     }
 
-    private static Map<String , Object> createHeader(){
-        Map<String ,Object> header = new HashMap<>();
+    private static Map<String, Object> createHeader(){
+        Map<String,Object> header = new HashMap<>();
 
         header.put("type", "jwt");
-        header.put("alg","HS256");
-        header.put("date",System.currentTimeMillis());
+        header.put("alg", "HS256");
+        header.put("date", System.currentTimeMillis());
 
         return header;
     }
