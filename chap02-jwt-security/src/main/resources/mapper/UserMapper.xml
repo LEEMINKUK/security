@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.ohgiraffers.jwtsecurity.user.mapper.UserMapper">
 
     <resultMap id="login" type="com.ohgiraffers.jwtsecurity.user.dto.LoginUserDTO">
@@ -14,30 +13,30 @@
     </resultMap>
 
     <insert id="regist" parameterType="com.ohgiraffers.jwtsecurity.user.dto.LoginUserDTO">
-        insert
-        into tbl_user
-            (
-                 user_id
-                ,user_name
-                ,password
-                ,user_role
-            )
-            values
-            (
-                 #{userId}
-                ,#{userName}
-                ,#{userPass}
-                ,#{userRole}
-            )
+        INSERT INTO TBL_USER
+        (
+          USER_ID
+        , USER_NAME
+        , PASSWORD
+        , USER_ROLE
+        )
+        VALUES
+        (
+          #{ userId }
+        , #{ userName }
+        , #{ userPass }
+        , #{ userRole }
+        )
     </insert>
+
     <select id="findByUsername" resultMap="login">
-        select
-                 user_no
-                ,user_id
-                ,user_name
-                ,password
-                ,user_role
-            from tbl_user
-           where user_id = #{userId}
+        SELECT
+               USER_NO
+             , USER_ID
+             , USER_NAME
+             , PASSWORD
+             , USER_ROLE
+          FROM TBL_USER
+         WHERE USER_ID = #{ userId }
     </select>
 </mapper>

@@ -1,6 +1,5 @@
 package com.ohgiraffers.jwtsecurity.auth.filter;
 
-import ch.qos.logback.core.subst.Token;
 import com.ohgiraffers.jwtsecurity.auth.model.DetailsUser;
 import com.ohgiraffers.jwtsecurity.common.AuthConstants;
 import com.ohgiraffers.jwtsecurity.common.UserRole;
@@ -33,13 +32,12 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         List<String> roleLessList = Arrays.asList("/signup");
 
-        if (roleLessList.contains((request.getRequestURI()))) {
+        if(roleLessList.contains((request.getRequestURI()))) {
             chain.doFilter(request, response);
             return;
         }
@@ -47,13 +45,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String header = request.getHeader(AuthConstants.AUTH_HEADER);
 
         try {
-
-
             if (header != null && !header.equalsIgnoreCase("")) {
                 String token = TokenUtils.splitHeader(header);
 
                 if (TokenUtils.isValidToken(token)) {
-
                     Claims claims = TokenUtils.getClaimsFromToken(token);
 
                     // 유저 정보
@@ -72,30 +67,28 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                     chain.doFilter(request, response);
 
                 } else {
-                    throw new RuntimeException("token 이 유효하지 않습니다.");
+                    throw new RuntimeException("token이 유효하지 않습니다.");
                 }
-
             } else {
-                throw new RuntimeException("token 이 존재하지 않습니다");
+                throw new RuntimeException("token이 존재하지 않습니다.");
             }
         } catch (Exception e) {
 
-            response.setContentType("Application/json");
-            PrintWriter printWriter = response.getWriter();
+        response.setContentType("application/json");
+        PrintWriter printWriter = response.getWriter();
 
-            JSONObject jsonObject = jsonResponseWrapper(e);
-            printWriter.print(jsonObject);
-            printWriter.flush();
-            printWriter.close();
-
+        JSONObject jsonObject = jsonResponseWrapper(e);
+        printWriter.print(jsonObject);
+        printWriter.flush();
+        printWriter.close();
         }
     }
 
     /* 토큰 관련 exception 발생 시 예외 내용을 담은 객체 반환하는 메소드 */
-    private JSONObject jsonResponseWrapper(Exception e){
+    private JSONObject jsonResponseWrapper(Exception e) {
         String resultMsg = "";
 
-        if (e instanceof ExpiredJwtException){
+        if(e instanceof ExpiredJwtException) {
             resultMsg = "Token Expired";
         } else if (e instanceof SignatureException) {
             resultMsg = "Token SignatureException";
@@ -104,10 +97,11 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         } else {
             resultMsg = "other Token error";
         }
+
         HashMap<String, Object> jsonMap = new HashMap<>();
-        jsonMap.put("status",401);
-        jsonMap.put("message",resultMsg);
-        jsonMap.put("reason",e.getMessage());
+        jsonMap.put("status", 401);
+        jsonMap.put("message", resultMsg);
+        jsonMap.put("reason", e.getMessage());
 
         return new JSONObject(jsonMap);
     }

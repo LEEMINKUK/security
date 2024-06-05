@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+/* CORS 설정을 위한 filter 설정 클래스 */
 public class HeaderFilter implements Filter {
 
     @Override

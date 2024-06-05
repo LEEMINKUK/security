@@ -4,10 +4,10 @@ Content-Type: application/json
 Accept: */*
 
 {
-  "userId": "user05",
-  "userName": "호랑이5",
-  "userPass": "pass05",
-  "userRole": "USER"
+  "userId": "user03",
+  "userName": "코알라",
+  "userPass": "pass03",
+  "userRole": "ALL"
 }
 
 ### 로그인
@@ -16,14 +16,14 @@ Content-Type: application/json
 Accept: */*
 
 {
-  "userId": "user05",
-  "userPass": "pass05"
+  "userId": "user03",
+  "userPass": "pass03"
 }
 
-###
+### GET 요청
 GET http://localhost:8080/test
-Authorization: BEARER eyJkYXRlIjoxNzE2Nzk0MjgzNzU3LCJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJvaGdpcmFmZmVycyB0b2tlbiA6IDEwIiwidXNlck5hbWUiOiLtmLjrnpHsnbQ1IiwidXNlclJvbGUiOlsiVVNFUiJdLCJleHAiOjE3MTY4ODA2ODMsInVzZXJJZCI6InVzZXIwNSJ9.AbSxwSg09fkTwnqlD5QFg3vJ3lYpIFq_Zkj8cpsj-QQ
+Authorization: BEARER eyJkYXRlIjoxNzE2Nzg5Mjg2NTExLCJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJvaGdpcmFmZmVycyB0b2tlbiA6IDIiLCJ1c2VyTmFtZSI6Iuy9lOyVjOudvCIsInVzZXJSb2xlIjoiQURNSU4iLCJleHAiOjE3MTY4NzU2ODYsInVzZXJJZCI6InVzZXIwMiJ9.H2Ffw-jxsGQ3mF3LElclgSkJzXkAtQbuySGBWpcT7qE
 
-###
+### POST 요청
 POST http://localhost:8080/test
-Authorization: BEARER eyJkYXRlIjoxNzE2NzkwNjQ1Nzc2LCJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJvaGdpcmFmZmVycyB0b2tlbiA6IDEwIiwidXNlck5hbWUiOiLtmLjrnpHsnbQ1IiwidXNlclJvbGUiOlsiVVNFUiJdLCJleHAiOjE3MTY4NzcwNDUsInVzZXJJZCI6InVzZXIwNSJ9.5uR91BOHyT9b8PDgNZKjCr5oKJEB47v3X13lVbVwsv8
+Authorization: BEARER eyJkYXRlIjoxNzE2Nzg5MTEwMTQ0LCJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiJvaGdpcmFmZmVycyB0b2tlbiA6IDEiLCJ1c2VyTmFtZSI6Iuy9lOyVjOudvCIsInVzZXJSb2xlIjoiVVNFUiIsImV4cCI6MTcxNjg3NTUxMCwidXNlcklkIjoidXNlcjAxIn0.zIndsMAFwwr5S93q4LvDD-LUxEy1XPsabewAsvPkI5I

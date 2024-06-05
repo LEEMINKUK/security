@@ -1,5 +1,7 @@
 package com.ohgiraffers.jwtsecurity.auth.config;
 
+/* web configuration을 위한 클래스 */
+
 import com.ohgiraffers.jwtsecurity.auth.filter.HeaderFilter;
 import com.ohgiraffers.jwtsecurity.auth.interceptor.JwtTokenInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -9,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-/* web configuration 을 위한 클래스 */
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
@@ -26,7 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FilterRegistrationBean<HeaderFilter> getFilterRegistrationBean(){
+    public FilterRegistrationBean<HeaderFilter> getFilterRegistrationBean() {
+
         FilterRegistrationBean<HeaderFilter> registrationBean = new FilterRegistrationBean<HeaderFilter>(createHeaderFilter());
         registrationBean.setOrder(Integer.MIN_VALUE);
         registrationBean.addUrlPatterns("/*");
@@ -34,12 +36,12 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public HeaderFilter createHeaderFilter(){
+    public HeaderFilter createHeaderFilter() {
         return new HeaderFilter();
     }
 
     @Bean
-    public JwtTokenInterceptor jwtTokenInterceptor(){
+    public JwtTokenInterceptor jwtTokenInterceptor() {
         return new JwtTokenInterceptor();
     }
 }

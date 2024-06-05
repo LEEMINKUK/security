@@ -40,6 +40,5 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
         printWriter.print(jsonObject);
         printWriter.flush();
         printWriter.close();
-
     }
 }

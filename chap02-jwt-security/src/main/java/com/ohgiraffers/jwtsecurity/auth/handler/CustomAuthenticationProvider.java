@@ -21,18 +21,17 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-        UsernamePasswordAuthenticationToken loginToken =(UsernamePasswordAuthenticationToken) authentication;
+        UsernamePasswordAuthenticationToken loginToken = (UsernamePasswordAuthenticationToken) authentication;
 
         String id = loginToken.getName();
         String pass = (String) loginToken.getCredentials();
 
         DetailsUser detailsUser = (DetailsUser) detailsService.loadUserByUsername(id);
 
-        if (!passwordEncoder.matches(pass,detailsUser.getPassword())){
-            throw new BadCredentialsException(pass + "는 틀린 비밀번호 입니다.");
+        if(!passwordEncoder.matches(pass, detailsUser.getPassword())) {
+            throw new BadCredentialsException(pass + "는 틀린 비밀번호입니다.");
         }
-
-        return new UsernamePasswordAuthenticationToken(detailsUser,pass,detailsUser.getAuthorities());
+        return new UsernamePasswordAuthenticationToken(detailsUser, pass, detailsUser.getAuthorities());
     }
 
     @Override

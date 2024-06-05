@@ -1,5 +1,7 @@
 package com.ohgiraffers.jwtsecurity.common.utils;
 
+/* 토큰을 관리하기 위한 utils 모음 클래스 */
+
 import com.ohgiraffers.jwtsecurity.user.dto.LoginUserDTO;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,54 +14,52 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-/* 토큰을 관리하기 위한 utils 모음 클래스 */
 @Component
 public class TokenUtils {
 
     private static String jwtSecretKey;
     private static Long tokenValidateTime;
 
-
-
     @Value("${jwt.key}")
-    public void setJwtSecretKey(String jwtSecretKey){
-        TokenUtils.jwtSecretKey=jwtSecretKey;
+    public void setJwtSecretKey(String jwtSecretKey) {
+        TokenUtils.jwtSecretKey = jwtSecretKey;
     }
 
     @Value("${jwt.time}")
-    public void setTokenValidateTime(Long tokenValidateTime){
+    public void setTokenValidateTime(Long tokenValidateTime) {
         TokenUtils.tokenValidateTime = tokenValidateTime;
     }
 
-    /* header 의 token 을 분리 하는 메소드 */
-    public static String splitHeader(String header){
-        if (!header.equals("")){
+    /* header의 token을 분리하는 메소드 */
+    public static String splitHeader(String header) {
+        if(!header.equals("")) {
             return header.split(" ")[1];
         } else {
             return null;
         }
     }
-    /* 토큰이 유효한지 확인하는 메소드 */
-    public static boolean isValidToken(String token){
-        //복호화?
-        try{
-        Claims claims = getClaimsFromToken(token);
-        return true;
 
-        } catch (ExpiredJwtException e){
+    /* 토큰이 유효한지 확인하는 메소드 */
+    public static boolean isValidToken(String token) {
+
+        try {
+            Claims claims = getClaimsFromToken(token);
+            return true;
+        } catch (ExpiredJwtException e) {
             e.printStackTrace();
             return false;
-        }catch (JwtException e){
+        } catch (JwtException e) {
             e.printStackTrace();
             return false;
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             e.printStackTrace();
             return false;
         }
     }
 
+
     /* 토큰을 복호화 하는 메소드 */
-    public static Claims getClaimsFromToken(String token){
+    public static Claims getClaimsFromToken(String token) {
 
         return Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(jwtSecretKey))
@@ -67,8 +67,9 @@ public class TokenUtils {
                 .getBody();
     }
 
-    /* 토큰을 생성하는 메소드  */
+    /* 토큰을 생성하는 메소드 */
     public static String generateJwtToken(LoginUserDTO user) {
+
         Date expireTime = new Date(System.currentTimeMillis() + tokenValidateTime);
 
         JwtBuilder builder = Jwts.builder()
@@ -81,8 +82,9 @@ public class TokenUtils {
         return builder.compact();
     }
 
-    private static Map<String, Object> createHeader(){
-        Map<String,Object> header = new HashMap<>();
+    /* 토큰의 header를 설정하는 메소드 */
+    private static Map<String, Object> createHeader() {
+        Map<String, Object> header = new HashMap<>();
 
         header.put("type", "jwt");
         header.put("alg", "HS256");
@@ -90,23 +92,21 @@ public class TokenUtils {
 
         return header;
     }
-    /* 사용자 정보를 기반으로 claims 생성 하는 메소드 */
-    private static Map<String ,Object> createClaims(LoginUserDTO user){
-        Map<String ,Object> claims = new HashMap<>();
 
-        claims.put("userId",user.getUserId());
+    /* 사용자 정보를 기반으로 claim을 생성하는 메소드 */
+    private static Map<String, Object> createClaims(LoginUserDTO user) {
+        Map<String, Object> claims = new HashMap<>();
+
+        claims.put("userId", user.getUserId());
         claims.put("userName", user.getUserName());
-        claims.put("userRole",user.getRole());
+        claims.put("userRole", user.getUserRole());
 
         return claims;
-
     }
+
     /* JWT 서명을 발급하는 메소드 */
-    private static Key createSignature(){
+    private static Key createSignature() {
         byte[] secretBytes = DatatypeConverter.parseBase64Binary(jwtSecretKey);
         return new SecretKeySpec(secretBytes, SignatureAlgorithm.HS256.getJcaName());
     }
-
-
-
 }
